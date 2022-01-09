@@ -5,6 +5,7 @@ import {chmod} from '@actions/io/lib/io-util'
 import * as tc from '@actions/tool-cache'
 import * as exec from '@actions/exec'
 import {execWithOutput} from './exec'
+import {mkdir} from 'fs'
 
 const CERT_IDENTIFIER = 'Developer ID Installer: AgileBits Inc. (2BUA8C4S2C)'
 const KEY_FINGERPRINT = '3FEF9748469ADBE15DA7CA80AC2D62742012EA22'
@@ -70,6 +71,7 @@ export async function install(onePasswordVersion: string): Promise<void> {
 
   await mv(`${extracted}/op`, `${destination}/op`)
   await chmod(`${destination}/op`, '0755')
+  mkdir('~/.config/op', () => {})
 
   const cachedPath = await tc.cacheDir(destination, 'op', onePasswordVersion)
   core.addPath(cachedPath)
