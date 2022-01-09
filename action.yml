@@ -1,9 +1,9 @@
-name: '1Password Secrets'
-description: 'Read items from 1Password for use in your GitHub Action workflows'
-author: 'Robots & Pencils'
+name: 'Cyera 1Password Action'
+description: 'Connects to 1Password for being able to use 1Password CLI in your GitHub Action workflows'
+author: 'Cyera'
 inputs:
   device-id:
-    require: true
+    required: true
     description: 'A base 32-encoded device ID.'
   sign-in-address:
     required: true
@@ -17,12 +17,11 @@ inputs:
   master-password:
     required: true
     description: '1Password master password'
-  items:
-    required: true
-    description: 'The vault and item names, and optionally new names, being requested.'
 runs:
   using: 'node12'
-  main: 'dist/index.js'
+  main: 'dist/main/main.js'
+  post: 'dist/post/post.js'
+  post-if: success()
 branding:
   icon: "lock"
-  color: "yellow"
+  color: "purple"

@@ -1,4 +1,4 @@
-import os from 'os'
+import * as os from 'os'
 import * as core from '@actions/core'
 import {mv} from '@actions/io'
 import {chmod} from '@actions/io/lib/io-util'
