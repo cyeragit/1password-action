@@ -43,10 +43,8 @@ var tc = require("@actions/tool-cache");
 var exec_1 = require("./exec");
 var ONE_PASSWORD_VERSION = '1.12.3';
 var OnePassword = /** @class */ (function () {
-    function OnePassword(deviceId) {
-        this.onePasswordEnv = {
-            OP_DEVICE: deviceId
-        };
+    function OnePassword() {
+        this.onePasswordEnv = {};
         if (process.env['XDG_CONFIG_HOME'] === undefined) {
             // This env var isn't set on GitHub-hosted runners
             this.onePasswordEnv.XDG_CONFIG_HOME = process.env['HOME'] + "/.config";

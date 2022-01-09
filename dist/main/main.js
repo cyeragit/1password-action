@@ -40,12 +40,11 @@ var core = require("@actions/core");
 var _1password_1 = require("./1password");
 function run() {
     return __awaiter(this, void 0, void 0, function () {
-        var deviceId, onePassword, error_1, signInAddress, emailAddress, masterPassword, secretKey, error_2, error_3;
+        var onePassword, error_1, signInAddress, emailAddress, masterPassword, secretKey, error_2, error_3;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    deviceId = core.getInput('device-id');
-                    onePassword = new _1password_1.OnePassword(deviceId);
+                    onePassword = new _1password_1.OnePassword();
                     _a.label = 1;
                 case 1:
                     _a.trys.push([1, 3, , 4]);

@@ -2,9 +2,6 @@ name: 'Login 1Password Action'
 description: 'Connects to 1Password for being able to use 1Password CLI in your GitHub Action workflows'
 author: 'TheHobbit'
 inputs:
-  device-id:
-    required: true
-    description: 'A base 32-encoded device ID.'
   sign-in-address:
     required: true
     description: '1Password sign-in address'
