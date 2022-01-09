@@ -45,6 +45,8 @@ export class OnePassword {
           signInAddress,
           emailAddress,
           secretKey,
+          '--config',
+          '~/.config/op',
           '--raw',
           '--shorthand',
           'github_action'
