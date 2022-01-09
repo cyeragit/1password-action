@@ -44,11 +44,9 @@ var exec_1 = require("./exec");
 var ONE_PASSWORD_VERSION = '1.12.3';
 var OnePassword = /** @class */ (function () {
     function OnePassword(deviceId) {
-        var _a;
         this.onePasswordEnv = {
             OP_DEVICE: deviceId
         };
-        core.info((_a = process.env['XDG_CONFIG_HOME']) !== null && _a !== void 0 ? _a : 'It is empty');
         if (process.env['XDG_CONFIG_HOME'] === undefined) {
             // This env var isn't set on GitHub-hosted runners
             this.onePasswordEnv.XDG_CONFIG_HOME = process.env['HOME'] + "/.config";
@@ -83,7 +81,15 @@ var OnePassword = /** @class */ (function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, exec_1.execWithOutput('op', ['signin', signInAddress, emailAddress, secretKey, '--raw'], {
+                        return [4 /*yield*/, exec_1.execWithOutput('op', [
+                                'signin',
+                                signInAddress,
+                                emailAddress,
+                                secretKey,
+                                '--raw',
+                                '--config',
+                                '~/.config/op'
+                            ], {
                                 env: env,
                                 input: Buffer.alloc(masterPassword.length, masterPassword)
                             })];
