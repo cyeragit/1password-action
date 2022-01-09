@@ -40,17 +40,7 @@ export class OnePassword {
     try {
       const output = await execWithOutput(
         'op',
-        [
-          'signin',
-          signInAddress,
-          emailAddress,
-          secretKey,
-          '--config',
-          '~/.config/op',
-          '--raw',
-          '--shorthand',
-          'github-guest-user'
-        ],
+        ['signin', signInAddress, emailAddress, secretKey, '--raw'],
         {
           env,
           input: Buffer.alloc(masterPassword.length, masterPassword)
