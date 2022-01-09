@@ -3,7 +3,7 @@ import {install} from './install'
 import * as tc from '@actions/tool-cache'
 import {execWithOutput} from './exec'
 
-const ONE_PASSWORD_VERSION = '1.8.0'
+const ONE_PASSWORD_VERSION = '1.12.3'
 
 export class OnePassword {
   onePasswordEnv: {[key: string]: string}
