@@ -49,7 +49,7 @@ export class OnePassword {
           '~/.config/op',
           '--raw',
           '--shorthand',
-          'github_action'
+          'github-guest-user'
         ],
         {
           env,
