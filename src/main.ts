@@ -2,7 +2,8 @@ import * as core from '@actions/core'
 import {OnePassword} from './1password'
 
 async function run(): Promise<void> {
-  const onePassword = new OnePassword()
+  const deviceId = core.getInput('device-id')
+  const onePassword = new OnePassword(deviceId)
 
   try {
     await onePassword.setupAndInstallIfNeeded()

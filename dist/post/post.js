@@ -40,11 +40,12 @@ var core = require("@actions/core");
 var _1password_1 = require("./1password");
 function run() {
     return __awaiter(this, void 0, void 0, function () {
-        var onePassword, error_1;
+        var deviceId, onePassword, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    onePassword = new _1password_1.OnePassword();
+                    deviceId = core.getInput('device-id');
+                    onePassword = new _1password_1.OnePassword(deviceId);
                     core.info('Signing out of 1Password');
                     _a.label = 1;
                 case 1:
