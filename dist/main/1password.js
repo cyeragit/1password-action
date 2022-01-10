@@ -41,6 +41,7 @@ var core = require("@actions/core");
 var install_1 = require("./install");
 var tc = require("@actions/tool-cache");
 var exec_1 = require("./exec");
+var child_process_1 = require("child_process");
 var ONE_PASSWORD_VERSION = '1.12.3';
 var OnePassword = /** @class */ (function () {
     function OnePassword(deviceId) {
@@ -75,46 +76,34 @@ var OnePassword = /** @class */ (function () {
     OnePassword.prototype.signIn = function (signInAddress, emailAddress, secretKey, masterPassword) {
         var _a, _b;
         return __awaiter(this, void 0, void 0, function () {
-            var _c, _d, _e, _f, env, output, session, error_1;
+            var _c, _d, _e, _f, child, output, session;
             return __generator(this, function (_g) {
                 switch (_g.label) {
-                    case 0: return [4 /*yield*/, exec_1.execWithOutput('mkdir', ['-p', '~/.config/op'])];
-                    case 1:
-                        _g.sent();
-                        return [4 /*yield*/, exec_1.execWithOutput('sudo', ['chmod', '600', '~/.config/op'])];
-                    case 2:
-                        _g.sent();
-                        return [4 /*yield*/, exec_1.execWithOutput('export', ["OP_DEVICE=" + this.deviceId])];
-                    case 3:
-                        _g.sent();
+                    case 0:
                         core.info((_a = process.env['XDG_CONFIG_HOME']) !== null && _a !== void 0 ? _a : 'XDG_CONFIG_HOME empty');
                         _d = (_c = core).info;
                         return [4 /*yield*/, exec_1.execWithOutput('ls -lah', [(_b = process.env['XDG_CONFIG_HOME']) !== null && _b !== void 0 ? _b : '.'])];
-                    case 4:
+                    case 1:
                         _d.apply(_c, [_g.sent()]);
                         _f = (_e = core).info;
                         return [4 /*yield*/, exec_1.execWithOutput('op --version')];
-                    case 5:
+                    case 2:
                         _f.apply(_e, [_g.sent()]);
-                        env = this.onePasswordEnv;
-                        _g.label = 6;
-                    case 6:
-                        _g.trys.push([6, 8, , 9]);
-                        return [4 /*yield*/, exec_1.execWithOutput('op', ['signin', signInAddress, emailAddress], {
-                                env: env,
-                                input: Buffer.alloc(secretKey.length + 1 + masterPassword.length, secretKey + "\n" + masterPassword)
-                            })];
-                    case 7:
-                        output = _g.sent();
-                        core.info('Successfully signed in to 1Password');
-                        session = output.toString().trim();
-                        core.setSecret(session);
-                        this.onePasswordEnv.OP_SESSION_github_action = session;
-                        return [3 /*break*/, 9];
-                    case 8:
-                        error_1 = _g.sent();
-                        throw new Error(error_1);
-                    case 9: return [2 /*return*/];
+                        // const env = this.onePasswordEnv
+                        try {
+                            child = child_process_1.spawn("op signin " + signInAddress + " " + emailAddress);
+                            child.stdin.write(secretKey + "\n" + masterPassword + "\n");
+                            output = child.stdout.read();
+                            core.info(output);
+                            core.info('Successfully signed in to 1Password');
+                            session = output.toString().trim();
+                            core.setSecret(session);
+                            this.onePasswordEnv.OP_SESSION_github_action = session;
+                        }
+                        catch (error) {
+                            throw new Error(error);
+                        }
+                        return [2 /*return*/];
                 }
             });
         });

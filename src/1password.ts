@@ -2,6 +2,7 @@ import * as core from '@actions/core'
 import {install} from './install'
 import * as tc from '@actions/tool-cache'
 import {execWithOutput} from './exec'
+import {spawn} from 'child_process'
 
 const ONE_PASSWORD_VERSION = '1.12.3'
 
@@ -37,27 +38,17 @@ export class OnePassword {
     secretKey: string,
     masterPassword: string
   ): Promise<void> {
-    await execWithOutput('mkdir', ['-p', '~/.config/op'])
-    await execWithOutput('sudo', ['chmod', '600', '~/.config/op'])
-    await execWithOutput('export', [`OP_DEVICE=${this.deviceId}`])
     core.info(process.env['XDG_CONFIG_HOME'] ?? 'XDG_CONFIG_HOME empty')
     core.info(
       await execWithOutput('ls -lah', [process.env['XDG_CONFIG_HOME'] ?? '.'])
     )
     core.info(await execWithOutput('op --version'))
-    const env = this.onePasswordEnv
+    // const env = this.onePasswordEnv
     try {
-      const output = await execWithOutput(
-        'op',
-        ['signin', signInAddress, emailAddress],
-        {
-          env,
-          input: Buffer.alloc(
-            secretKey.length + 1 + masterPassword.length,
-            `${secretKey}\n${masterPassword}`
-          )
-        }
-      )
+      const child = spawn(`op signin ${signInAddress} ${emailAddress}`)
+      child.stdin.write(`${secretKey}\n${masterPassword}\n`)
+      const output = child.stdout.read()
+      core.info(output)
 
       core.info('Successfully signed in to 1Password')
       const session = output.toString().trim()
