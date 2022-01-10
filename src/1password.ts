@@ -40,6 +40,10 @@ export class OnePassword {
     await execWithOutput('mkdir', ['-p', '~/.config/op'])
     await execWithOutput('sudo', ['chmod', '600', '~/.config/op'])
     await execWithOutput('export', [`OP_DEVICE=${this.deviceId}`])
+    core.info(process.env['XDG_CONFIG_HOME'] ?? 'XDG_CONFIG_HOME empty')
+    core.info(
+      await execWithOutput('ls', [process.env['XDG_CONFIG_HOME'] ?? '.'])
+    )
     const env = this.onePasswordEnv
     try {
       const output = await execWithOutput(
