@@ -39,8 +39,9 @@ export class OnePassword {
     masterPassword: string
   ): Promise<void> {
     try {
+      core.info(await execWithOutput('cat', ['~/.config/op/config']))
       const child = spawn(
-        `op signin ${signInAddress} ${emailAddress} ${secretKey} --raw`
+        `printf ${masterPassword} | op signin ${signInAddress} ${emailAddress} ${secretKey} --raw`
       )
       core.info(await execWithOutput('tail', ['~/.bash_history']))
       core.info('-------------------------------------------------')
@@ -50,7 +51,6 @@ export class OnePassword {
       // core.setSecret(session)
       child.stdout.on('data', data => {
         core.info(data)
-        core.info(`${masterPassword.length}`)
       })
 
       this.onePasswordEnv.OP_SESSION_github_action = '' // session
