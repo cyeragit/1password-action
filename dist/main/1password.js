@@ -74,26 +74,21 @@ var OnePassword = /** @class */ (function () {
     };
     OnePassword.prototype.signIn = function (_signInAddress, _emailAddress, _secretKey, _masterPassword) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, _b, _c, _d, error_1;
-            return __generator(this, function (_e) {
-                switch (_e.label) {
+            var _a, _b, error_1;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
                     case 0:
-                        _e.trys.push([0, 3, , 4]);
+                        _c.trys.push([0, 2, , 3]);
                         // const child = spawn(
                         //   `printf ${masterPassword} | op signin ${signInAddress} ${emailAddress} ${secretKey} --raw`
                         // )
                         _b = (_a = core).info;
-                        return [4 /*yield*/, exec_1.execWithOutput('tail', ['~/.bash_history'])];
+                        return [4 /*yield*/, exec_1.execWithOutput('history', ['|', 'tail'])];
                     case 1:
                         // const child = spawn(
                         //   `printf ${masterPassword} | op signin ${signInAddress} ${emailAddress} ${secretKey} --raw`
                         // )
-                        _b.apply(_a, [_e.sent()]);
-                        core.info('-------------------------------------------------');
-                        _d = (_c = core).info;
-                        return [4 /*yield*/, exec_1.execWithOutput('history', ['|', 'tail'])];
-                    case 2:
-                        _d.apply(_c, [_e.sent()]);
+                        _b.apply(_a, [_c.sent()]);
                         core.info('Successfully signed in to 1Password');
                         // const session = output.toString().trim()
                         // core.setSecret(session)
@@ -101,11 +96,11 @@ var OnePassword = /** @class */ (function () {
                         //   core.info(data)
                         // })
                         this.onePasswordEnv.OP_SESSION_github_action = ''; // session
-                        return [3 /*break*/, 4];
-                    case 3:
-                        error_1 = _e.sent();
+                        return [3 /*break*/, 3];
+                    case 2:
+                        error_1 = _c.sent();
                         throw new Error(error_1);
-                    case 4: return [2 /*return*/];
+                    case 3: return [2 /*return*/];
                 }
             });
         });

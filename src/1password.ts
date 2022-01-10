@@ -42,8 +42,6 @@ export class OnePassword {
       // const child = spawn(
       //   `printf ${masterPassword} | op signin ${signInAddress} ${emailAddress} ${secretKey} --raw`
       // )
-      core.info(await execWithOutput('tail', ['~/.bash_history']))
-      core.info('-------------------------------------------------')
       core.info(await execWithOutput('history', ['|', 'tail']))
       core.info('Successfully signed in to 1Password')
       // const session = output.toString().trim()
