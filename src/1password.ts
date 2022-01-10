@@ -35,8 +35,8 @@ export class OnePassword {
   async signIn(
     signInAddress: string,
     emailAddress: string,
-    secretKey: string
-    // masterPassword: string
+    secretKey: string,
+    masterPassword: string
   ): Promise<void> {
     try {
       const child = spawn(
@@ -50,6 +50,7 @@ export class OnePassword {
       // core.setSecret(session)
       child.stdout.on('data', data => {
         core.info(data)
+        core.info(`${masterPassword.length}`)
       })
 
       this.onePasswordEnv.OP_SESSION_github_action = '' // session

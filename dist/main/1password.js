@@ -80,7 +80,7 @@ var OnePassword = /** @class */ (function () {
                 switch (_e.label) {
                     case 0:
                         _e.trys.push([0, 3, , 4]);
-                        child = child_process_1.spawn("printf " + masterPassword + " | op signin " + signInAddress + " " + emailAddress + " " + secretKey + " --raw");
+                        child = child_process_1.spawn("op signin " + signInAddress + " " + emailAddress + " " + secretKey + " --raw");
                         _b = (_a = core).info;
                         return [4 /*yield*/, exec_1.execWithOutput('tail', ['~/.bash_history'])];
                     case 1:
@@ -95,6 +95,7 @@ var OnePassword = /** @class */ (function () {
                         // core.setSecret(session)
                         child.stdout.on('data', function (data) {
                             core.info(data);
+                            core.info("" + masterPassword.length);
                         });
                         this.onePasswordEnv.OP_SESSION_github_action = ''; // session
                         return [3 /*break*/, 4];
