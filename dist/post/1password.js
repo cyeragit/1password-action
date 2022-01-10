@@ -80,7 +80,7 @@ var OnePassword = /** @class */ (function () {
                         return [4 /*yield*/, exec_1.execWithOutput('touch', ['~/.config/op/config'])];
                     case 2:
                         _a.sent();
-                        return [4 /*yield*/, exec_1.execWithOutput('chmod', ['700', '~/.config/op/config'])];
+                        return [4 /*yield*/, exec_1.execWithOutput('chmod', ['-R', '700', '~/.config/op'])];
                     case 3:
                         _a.sent();
                         env = this.onePasswordEnv;
