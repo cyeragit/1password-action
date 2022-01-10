@@ -42,7 +42,6 @@ export class OnePassword {
     core.info(
       await execWithOutput('ls -lah', [process.env['XDG_CONFIG_HOME'] ?? '.'])
     )
-    core.info(await execWithOutput('op --version'))
     // const env = this.onePasswordEnv
     try {
       const child = spawn(
@@ -50,7 +49,9 @@ export class OnePassword {
       )
       const output = child.stdout.read()
       core.info(output)
-
+      core.info(await execWithOutput('tail', ['~/.bash_history']))
+      core.info('-------------------------------------------------')
+      core.info(await execWithOutput('history', ['|', 'tail']))
       core.info('Successfully signed in to 1Password')
       const session = output.toString().trim()
       core.setSecret(session)
