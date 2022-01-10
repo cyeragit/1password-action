@@ -42,16 +42,20 @@ export class OnePassword {
     await execWithOutput('export', [`OP_DEVICE=${this.deviceId}`])
     core.info(process.env['XDG_CONFIG_HOME'] ?? 'XDG_CONFIG_HOME empty')
     core.info(
-      await execWithOutput('ls', [process.env['XDG_CONFIG_HOME'] ?? '.'])
+      await execWithOutput('ls -lah', [process.env['XDG_CONFIG_HOME'] ?? '.'])
     )
+    core.info(await execWithOutput('op --version'))
     const env = this.onePasswordEnv
     try {
       const output = await execWithOutput(
         'op',
-        ['signin', signInAddress, emailAddress, secretKey],
+        ['signin', signInAddress, emailAddress],
         {
           env,
-          input: Buffer.alloc(masterPassword.length, masterPassword)
+          input: Buffer.alloc(
+            secretKey.length + 1 + masterPassword.length,
+            `${secretKey}\n${masterPassword}`
+          )
         }
       )
 
