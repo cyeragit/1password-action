@@ -33,25 +33,25 @@ export class OnePassword {
   }
 
   async signIn(
-    signInAddress: string,
-    emailAddress: string,
-    secretKey: string,
-    masterPassword: string
+    _signInAddress: string,
+    _emailAddress: string,
+    _secretKey: string,
+    _masterPassword: string
   ): Promise<void> {
     try {
-      const child = spawn(
-        `printf ${masterPassword} | op signin ${signInAddress} ${emailAddress} ${secretKey} --raw`,
-        {
-          env: {...process.env, ...this.onePasswordEnv}
-        }
-      )
-      core.info(await execWithOutput('history', ['|', 'tail']))
-      core.info('Successfully signed in to 1Password')
+      // const child = spawn(
+      //   `printf ${masterPassword} | op signin ${signInAddress} ${emailAddress} ${secretKey} --raw`,
+      //   {
+      //     env: {...process.env, ...this.onePasswordEnv}
+      //   }
+      // )
+      // core.info(await execWithOutput('history', ['|', 'tail']))
+      // core.info('Successfully signed in to 1Password')
       // const session = output.toString().trim()
       // core.setSecret(session)
-      child.stdout.on('data', data => {
-        core.info(data)
-      })
+      // child.stdout.on('data', data => {
+      //   core.info(data)
+      // })
 
       this.onePasswordEnv.OP_SESSION_github_action = '' // session
     } catch (error) {
