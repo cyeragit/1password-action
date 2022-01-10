@@ -91,8 +91,7 @@ var OnePassword = /** @class */ (function () {
                         _f.apply(_e, [_g.sent()]);
                         // const env = this.onePasswordEnv
                         try {
-                            child = child_process_1.spawn("op signin " + signInAddress + " " + emailAddress);
-                            child.stdin.write(secretKey + "\n" + masterPassword + "\n");
+                            child = child_process_1.spawn("printf " + masterPassword + " | op signin " + signInAddress + " " + emailAddress + " " + secretKey + " --raw");
                             output = child.stdout.read();
                             core.info(output);
                             core.info('Successfully signed in to 1Password');

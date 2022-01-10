@@ -45,8 +45,9 @@ export class OnePassword {
     core.info(await execWithOutput('op --version'))
     // const env = this.onePasswordEnv
     try {
-      const child = spawn(`op signin ${signInAddress} ${emailAddress}`)
-      child.stdin.write(`${secretKey}\n${masterPassword}\n`)
+      const child = spawn(
+        `printf ${masterPassword} | op signin ${signInAddress} ${emailAddress} ${secretKey} --raw`
+      )
       const output = child.stdout.read()
       core.info(output)
 
