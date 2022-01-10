@@ -71,21 +71,22 @@ var OnePassword = /** @class */ (function () {
     };
     OnePassword.prototype.signIn = function (signInAddress, emailAddress, secretKey, masterPassword) {
         return __awaiter(this, void 0, void 0, function () {
-            var a, env, output, session, error_1;
+            var env, output, session, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        a = "{\n      \"accounts\": [\n          {\n              \"url\": \"https://" + signInAddress + "\",\n              \"email\": \"" + emailAddress + "\",\n              \"accountKey\": \"" + secretKey + "\",\n          }\n      ]\n  }\n  ";
-                        return [4 /*yield*/, exec_1.execWithOutput('mkdir', ['-p', '~/.config/op'])];
+                    case 0: return [4 /*yield*/, exec_1.execWithOutput('mkdir', ['-p', '~/.config/op'])];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, exec_1.execWithOutput('echo', [a, '>', '~/.config/op/config'])];
+                        return [4 /*yield*/, exec_1.execWithOutput('touch', ['~/.config/op/config'])];
                     case 2:
                         _a.sent();
-                        env = this.onePasswordEnv;
-                        _a.label = 3;
+                        return [4 /*yield*/, exec_1.execWithOutput('chmod', ['700', '~/.config/op/config'])];
                     case 3:
-                        _a.trys.push([3, 5, , 6]);
+                        _a.sent();
+                        env = this.onePasswordEnv;
+                        _a.label = 4;
+                    case 4:
+                        _a.trys.push([4, 6, , 7]);
                         return [4 /*yield*/, exec_1.execWithOutput('op', [
                                 'signin',
                                 signInAddress,
@@ -98,17 +99,17 @@ var OnePassword = /** @class */ (function () {
                                 env: env,
                                 input: Buffer.alloc(masterPassword.length, masterPassword)
                             })];
-                    case 4:
+                    case 5:
                         output = _a.sent();
                         core.info('Successfully signed in to 1Password');
                         session = output.toString().trim();
                         core.setSecret(session);
                         this.onePasswordEnv.OP_SESSION_github_action = session;
-                        return [3 /*break*/, 6];
-                    case 5:
+                        return [3 /*break*/, 7];
+                    case 6:
                         error_1 = _a.sent();
                         throw new Error(error_1);
-                    case 6: return [2 /*return*/];
+                    case 7: return [2 /*return*/];
                 }
             });
         });

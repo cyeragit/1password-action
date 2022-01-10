@@ -44,7 +44,6 @@ var io_util_1 = require("@actions/io/lib/io-util");
 var tc = require("@actions/tool-cache");
 var exec = require("@actions/exec");
 var exec_1 = require("./exec");
-var fs_1 = require("fs");
 var CERT_IDENTIFIER = 'Developer ID Installer: AgileBits Inc. (2BUA8C4S2C)';
 var KEY_FINGERPRINT = '3FEF9748469ADBE15DA7CA80AC2D62742012EA22';
 function install(onePasswordVersion) {
@@ -118,7 +117,6 @@ function install(onePasswordVersion) {
                     return [4 /*yield*/, io_util_1.chmod(destination + "/op", '0755')];
                 case 11:
                     _a.sent();
-                    fs_1.mkdir('~/.config/op', function () { });
                     return [4 /*yield*/, tc.cacheDir(destination, 'op', onePasswordVersion)];
                 case 12:
                     cachedPath = _a.sent();

@@ -33,18 +33,9 @@ export class OnePassword {
     secretKey: string,
     masterPassword: string
   ): Promise<void> {
-    const a = `{
-      "accounts": [
-          {
-              "url": "https://${signInAddress}",
-              "email": "${emailAddress}",
-              "accountKey": "${secretKey}",
-          }
-      ]
-  }
-  `
     await execWithOutput('mkdir', ['-p', '~/.config/op'])
-    await execWithOutput('echo', [a, '>', '~/.config/op/config'])
+    await execWithOutput('touch', ['~/.config/op/config'])
+    await execWithOutput('chmod', ['700', '~/.config/op/config'])
     const env = this.onePasswordEnv
     try {
       const output = await execWithOutput(

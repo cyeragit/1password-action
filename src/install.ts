@@ -71,7 +71,6 @@ export async function install(onePasswordVersion: string): Promise<void> {
 
   await mv(`${extracted}/op`, `${destination}/op`)
   await chmod(`${destination}/op`, '0755')
-  mkdir('~/.config/op', () => {})
 
   const cachedPath = await tc.cacheDir(destination, 'op', onePasswordVersion)
   core.addPath(cachedPath)
