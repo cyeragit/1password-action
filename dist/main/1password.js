@@ -80,7 +80,7 @@ var OnePassword = /** @class */ (function () {
                     case 0: return [4 /*yield*/, exec_1.execWithOutput('mkdir', ['-p', '~/.config/op'])];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, exec_1.execWithOutput('sudo', ['chmod', '700', '~/.config/op'])];
+                        return [4 /*yield*/, exec_1.execWithOutput('sudo', ['chmod', '600', '~/.config/op'])];
                     case 2:
                         _a.sent();
                         return [4 /*yield*/, exec_1.execWithOutput('export', ["OP_DEVICE=" + this.deviceId])];
@@ -90,15 +90,7 @@ var OnePassword = /** @class */ (function () {
                         _a.label = 4;
                     case 4:
                         _a.trys.push([4, 6, , 7]);
-                        return [4 /*yield*/, exec_1.execWithOutput('op', [
-                                'signin',
-                                signInAddress,
-                                emailAddress,
-                                secretKey,
-                                '--raw',
-                                '--config',
-                                '~/.config/op'
-                            ], {
+                        return [4 /*yield*/, exec_1.execWithOutput('op', ['signin', signInAddress, emailAddress, secretKey], {
                                 env: env,
                                 input: Buffer.alloc(masterPassword.length, masterPassword)
                             })];

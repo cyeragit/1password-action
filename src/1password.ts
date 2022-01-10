@@ -38,21 +38,13 @@ export class OnePassword {
     masterPassword: string
   ): Promise<void> {
     await execWithOutput('mkdir', ['-p', '~/.config/op'])
-    await execWithOutput('sudo', ['chmod', '700', '~/.config/op'])
+    await execWithOutput('sudo', ['chmod', '600', '~/.config/op'])
     await execWithOutput('export', [`OP_DEVICE=${this.deviceId}`])
     const env = this.onePasswordEnv
     try {
       const output = await execWithOutput(
         'op',
-        [
-          'signin',
-          signInAddress,
-          emailAddress,
-          secretKey,
-          '--raw',
-          '--config',
-          '~/.config/op'
-        ],
+        ['signin', signInAddress, emailAddress, secretKey],
         {
           env,
           input: Buffer.alloc(masterPassword.length, masterPassword)
