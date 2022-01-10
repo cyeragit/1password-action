@@ -35,14 +35,6 @@ async function run(): Promise<void> {
     return
   }
   core.endGroup()
-
-  core.info('Signing out of 1Password')
-
-  try {
-    await onePassword.signOut()
-  } catch (error) {
-    core.setFailed(error.message)
-  }
 }
 
 run()

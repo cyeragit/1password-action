@@ -40,7 +40,7 @@ var core = require("@actions/core");
 var _1password_1 = require("./1password");
 function run() {
     return __awaiter(this, void 0, void 0, function () {
-        var deviceId, onePassword, error_1, signInAddress, emailAddress, masterPassword, secretKey, error_2, error_3;
+        var deviceId, onePassword, error_1, signInAddress, emailAddress, masterPassword, secretKey, error_2;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -81,19 +81,7 @@ function run() {
                     return [2 /*return*/];
                 case 8:
                     core.endGroup();
-                    core.info('Signing out of 1Password');
-                    _a.label = 9;
-                case 9:
-                    _a.trys.push([9, 11, , 12]);
-                    return [4 /*yield*/, onePassword.signOut()];
-                case 10:
-                    _a.sent();
-                    return [3 /*break*/, 12];
-                case 11:
-                    error_3 = _a.sent();
-                    core.setFailed(error_3.message);
-                    return [3 /*break*/, 12];
-                case 12: return [2 /*return*/];
+                    return [2 /*return*/];
             }
         });
     });
