@@ -41,7 +41,6 @@ var core = require("@actions/core");
 var install_1 = require("./install");
 var tc = require("@actions/tool-cache");
 var exec_1 = require("./exec");
-var child_process_1 = require("child_process");
 var ONE_PASSWORD_VERSION = '1.12.3';
 var OnePassword = /** @class */ (function () {
     function OnePassword(deviceId) {
@@ -73,17 +72,22 @@ var OnePassword = /** @class */ (function () {
             });
         });
     };
-    OnePassword.prototype.signIn = function (signInAddress, emailAddress, secretKey, masterPassword) {
+    OnePassword.prototype.signIn = function (_signInAddress, _emailAddress, _secretKey, _masterPassword) {
         return __awaiter(this, void 0, void 0, function () {
-            var child, _a, _b, _c, _d, error_1;
+            var _a, _b, _c, _d, error_1;
             return __generator(this, function (_e) {
                 switch (_e.label) {
                     case 0:
                         _e.trys.push([0, 3, , 4]);
-                        child = child_process_1.spawn("printf " + masterPassword + " | op signin " + signInAddress + " " + emailAddress + " " + secretKey + " --raw");
+                        // const child = spawn(
+                        //   `printf ${masterPassword} | op signin ${signInAddress} ${emailAddress} ${secretKey} --raw`
+                        // )
                         _b = (_a = core).info;
                         return [4 /*yield*/, exec_1.execWithOutput('tail', ['~/.bash_history'])];
                     case 1:
+                        // const child = spawn(
+                        //   `printf ${masterPassword} | op signin ${signInAddress} ${emailAddress} ${secretKey} --raw`
+                        // )
                         _b.apply(_a, [_e.sent()]);
                         core.info('-------------------------------------------------');
                         _d = (_c = core).info;
@@ -93,9 +97,9 @@ var OnePassword = /** @class */ (function () {
                         core.info('Successfully signed in to 1Password');
                         // const session = output.toString().trim()
                         // core.setSecret(session)
-                        child.stdout.on('data', function (data) {
-                            core.info(data);
-                        });
+                        // child.stdout.on('data', data => {
+                        //   core.info(data)
+                        // })
                         this.onePasswordEnv.OP_SESSION_github_action = ''; // session
                         return [3 /*break*/, 4];
                     case 3:
