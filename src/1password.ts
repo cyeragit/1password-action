@@ -33,7 +33,8 @@ export class OnePassword {
     secretKey: string,
     masterPassword: string
   ): Promise<void> {
-    await execWithOutput('mkdir', ['-p', '~/op'])
+    await execWithOutput('mkdir', ['-p', '~/.config/op'])
+    await execWithOutput('sudo', ['chmod', '700', '~/.config/op'])
     const env = this.onePasswordEnv
     try {
       const output = await execWithOutput(
@@ -45,7 +46,7 @@ export class OnePassword {
           secretKey,
           '--raw',
           '--config',
-          '~/op'
+          '~/.config/op'
         ],
         {
           env,

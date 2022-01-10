@@ -74,13 +74,16 @@ var OnePassword = /** @class */ (function () {
             var env, output, session, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, exec_1.execWithOutput('mkdir', ['-p', '~/op'])];
+                    case 0: return [4 /*yield*/, exec_1.execWithOutput('mkdir', ['-p', '~/.config/op'])];
                     case 1:
                         _a.sent();
-                        env = this.onePasswordEnv;
-                        _a.label = 2;
+                        return [4 /*yield*/, exec_1.execWithOutput('sudo', ['chmod', '700', '~/.config/op'])];
                     case 2:
-                        _a.trys.push([2, 4, , 5]);
+                        _a.sent();
+                        env = this.onePasswordEnv;
+                        _a.label = 3;
+                    case 3:
+                        _a.trys.push([3, 5, , 6]);
                         return [4 /*yield*/, exec_1.execWithOutput('op', [
                                 'signin',
                                 signInAddress,
@@ -88,22 +91,22 @@ var OnePassword = /** @class */ (function () {
                                 secretKey,
                                 '--raw',
                                 '--config',
-                                '~/op'
+                                '~/.config/op'
                             ], {
                                 env: env,
                                 input: Buffer.alloc(masterPassword.length, masterPassword)
                             })];
-                    case 3:
+                    case 4:
                         output = _a.sent();
                         core.info('Successfully signed in to 1Password');
                         session = output.toString().trim();
                         core.setSecret(session);
                         this.onePasswordEnv.OP_SESSION_github_action = session;
-                        return [3 /*break*/, 5];
-                    case 4:
+                        return [3 /*break*/, 6];
+                    case 5:
                         error_1 = _a.sent();
                         throw new Error(error_1);
-                    case 5: return [2 /*return*/];
+                    case 6: return [2 /*return*/];
                 }
             });
         });
