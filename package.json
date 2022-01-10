@@ -6,9 +6,8 @@
   "main": "lib/main.js",
   "scripts": {
     "act": "act -P ubuntu-latest=nektos/act-environments-ubuntu:18.04 -j test --secret-file .secrets --env-file .environment",
-    "build": "npm run build:main && npm run build:post",
+    "build": "npm run build:main",
     "build:main": "tsc src/main.ts --outDir dist/main",
-    "build:post": "tsc src/post.ts --outDir dist/post",
     "format": "prettier --write **/*.ts",
     "format-check": "prettier --check **/*.ts",
     "lint": "eslint src/**/*.ts",

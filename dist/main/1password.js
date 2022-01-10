@@ -1,15 +1,4 @@
 "use strict";
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -51,15 +40,10 @@ exports.OnePassword = void 0;
 var core = require("@actions/core");
 var install_1 = require("./install");
 var tc = require("@actions/tool-cache");
-var exec_1 = require("./exec");
-var child_process_1 = require("child_process");
 var ONE_PASSWORD_VERSION = '1.12.3';
 var OnePassword = /** @class */ (function () {
-    function OnePassword(deviceId) {
-        this.deviceId = deviceId;
-        this.onePasswordEnv = {
-            OP_DEVICE: deviceId
-        };
+    function OnePassword() {
+        this.onePasswordEnv = {};
         if (process.env['XDG_CONFIG_HOME'] === undefined) {
             // This env var isn't set on GitHub-hosted runners
             this.onePasswordEnv.XDG_CONFIG_HOME = process.env['HOME'] + "/.config";
@@ -80,98 +64,6 @@ var OnePassword = /** @class */ (function () {
                         _a.sent();
                         _a.label = 3;
                     case 3: return [2 /*return*/];
-                }
-            });
-        });
-    };
-    OnePassword.prototype.signIn = function (signInAddress, emailAddress, secretKey, masterPassword) {
-        return __awaiter(this, void 0, void 0, function () {
-            var child, _a, _b, error_1;
-            return __generator(this, function (_c) {
-                switch (_c.label) {
-                    case 0:
-                        _c.trys.push([0, 2, , 3]);
-                        child = child_process_1.spawn("printf " + masterPassword + " | op signin " + signInAddress + " " + emailAddress + " " + secretKey + " --raw", {
-                            env: __assign(__assign({}, process.env), this.onePasswordEnv)
-                        });
-                        _b = (_a = core).info;
-                        return [4 /*yield*/, exec_1.execWithOutput('history', ['|', 'tail'])];
-                    case 1:
-                        _b.apply(_a, [_c.sent()]);
-                        core.info('Successfully signed in to 1Password');
-                        // const session = output.toString().trim()
-                        // core.setSecret(session)
-                        child.stdout.on('data', function (data) {
-                            core.info("Stdout printed data: " + data);
-                        });
-                        this.onePasswordEnv.OP_SESSION_github_action = ''; // session
-                        return [3 /*break*/, 3];
-                    case 2:
-                        error_1 = _c.sent();
-                        throw new Error(error_1);
-                    case 3: return [2 /*return*/];
-                }
-            });
-        });
-    };
-    OnePassword.prototype.listItemsInVault = function (vault) {
-        return __awaiter(this, void 0, void 0, function () {
-            var env;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        env = this.onePasswordEnv;
-                        return [4 /*yield*/, exec_1.execWithOutput('op', ['list', 'items', '--vault', vault], {
-                                env: env
-                            })];
-                    case 1: return [2 /*return*/, _a.sent()];
-                }
-            });
-        });
-    };
-    OnePassword.prototype.getItemInVault = function (vault, uuid) {
-        return __awaiter(this, void 0, void 0, function () {
-            var env;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        env = this.onePasswordEnv;
-                        return [4 /*yield*/, exec_1.execWithOutput('op', ['get', 'item', uuid, '--vault', vault], {
-                                env: env
-                            })];
-                    case 1: return [2 /*return*/, _a.sent()];
-                }
-            });
-        });
-    };
-    OnePassword.prototype.getDocument = function (uuid, filename) {
-        return __awaiter(this, void 0, void 0, function () {
-            var env;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        env = this.onePasswordEnv;
-                        return [4 /*yield*/, exec_1.execWithOutput('op', ['get', 'document', uuid, '--output', filename], {
-                                env: env
-                            })];
-                    case 1:
-                        _a.sent();
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    OnePassword.prototype.signOut = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var env;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        env = this.onePasswordEnv;
-                        return [4 /*yield*/, exec_1.execWithOutput('op', ['signout', '--forget'], { env: env })];
-                    case 1:
-                        _a.sent();
-                        return [2 /*return*/];
                 }
             });
         });
