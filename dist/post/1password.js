@@ -74,19 +74,13 @@ var OnePassword = /** @class */ (function () {
             var env, output, session, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, exec_1.execWithOutput('mkdir', ['-p', '~/.config/op'])];
+                    case 0: return [4 /*yield*/, exec_1.execWithOutput('mkdir', ['-p', '~/op'])];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, exec_1.execWithOutput('touch', ['~/.config/op/config'])];
-                    case 2:
-                        _a.sent();
-                        return [4 /*yield*/, exec_1.execWithOutput('chmod', ['-R', '600', '~/.config/op'])];
-                    case 3:
-                        _a.sent();
                         env = this.onePasswordEnv;
-                        _a.label = 4;
-                    case 4:
-                        _a.trys.push([4, 6, , 7]);
+                        _a.label = 2;
+                    case 2:
+                        _a.trys.push([2, 4, , 5]);
                         return [4 /*yield*/, exec_1.execWithOutput('op', [
                                 'signin',
                                 signInAddress,
@@ -94,22 +88,22 @@ var OnePassword = /** @class */ (function () {
                                 secretKey,
                                 '--raw',
                                 '--config',
-                                '~/.config/op'
+                                '~/op'
                             ], {
                                 env: env,
                                 input: Buffer.alloc(masterPassword.length, masterPassword)
                             })];
-                    case 5:
+                    case 3:
                         output = _a.sent();
                         core.info('Successfully signed in to 1Password');
                         session = output.toString().trim();
                         core.setSecret(session);
                         this.onePasswordEnv.OP_SESSION_github_action = session;
-                        return [3 /*break*/, 7];
-                    case 6:
+                        return [3 /*break*/, 5];
+                    case 4:
                         error_1 = _a.sent();
                         throw new Error(error_1);
-                    case 7: return [2 /*return*/];
+                    case 5: return [2 /*return*/];
                 }
             });
         });
