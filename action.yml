@@ -20,8 +20,6 @@ inputs:
 runs:
   using: 'node12'
   main: 'dist/main/main.js'
-  post: 'dist/post/post.js'
-  post-if: success()
 branding:
   icon: "lock"
   color: "purple"

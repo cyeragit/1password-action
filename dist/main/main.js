@@ -40,7 +40,7 @@ var core = require("@actions/core");
 var _1password_1 = require("./1password");
 function run() {
     return __awaiter(this, void 0, void 0, function () {
-        var deviceId, onePassword, error_1, signInAddress, emailAddress, masterPassword, secretKey, error_2;
+        var deviceId, onePassword, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -57,31 +57,7 @@ function run() {
                     error_1 = _a.sent();
                     core.setFailed(error_1.message);
                     return [3 /*break*/, 4];
-                case 4:
-                    signInAddress = core.getInput('sign-in-address');
-                    emailAddress = core.getInput('email-address');
-                    masterPassword = core.getInput('master-password');
-                    secretKey = core.getInput('secret-key');
-                    // Set inputs to secrets so they can't be leaked back to github console accidentally
-                    core.setSecret(signInAddress);
-                    core.setSecret(emailAddress);
-                    core.setSecret(masterPassword);
-                    core.setSecret(secretKey);
-                    core.startGroup('Signing in to 1Password');
-                    _a.label = 5;
-                case 5:
-                    _a.trys.push([5, 7, , 8]);
-                    return [4 /*yield*/, onePassword.signIn(signInAddress, emailAddress, secretKey, masterPassword)];
-                case 6:
-                    _a.sent();
-                    return [3 /*break*/, 8];
-                case 7:
-                    error_2 = _a.sent();
-                    core.setFailed("Error signing in to 1Password: " + error_2.message);
-                    return [2 /*return*/];
-                case 8:
-                    core.endGroup();
-                    return [2 /*return*/];
+                case 4: return [2 /*return*/];
             }
         });
     });
