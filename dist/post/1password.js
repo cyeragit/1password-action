@@ -74,41 +74,34 @@ var OnePassword = /** @class */ (function () {
         });
     };
     OnePassword.prototype.signIn = function (signInAddress, emailAddress, secretKey, masterPassword) {
-        var _a, _b;
         return __awaiter(this, void 0, void 0, function () {
-            var _c, _d, child, output, _e, _f, _g, _h, session, error_1;
-            return __generator(this, function (_j) {
-                switch (_j.label) {
+            var child, _a, _b, _c, _d, error_1;
+            return __generator(this, function (_e) {
+                switch (_e.label) {
                     case 0:
-                        core.info((_a = process.env['XDG_CONFIG_HOME']) !== null && _a !== void 0 ? _a : 'XDG_CONFIG_HOME empty');
-                        _d = (_c = core).info;
-                        return [4 /*yield*/, exec_1.execWithOutput('ls -lah', [(_b = process.env['XDG_CONFIG_HOME']) !== null && _b !== void 0 ? _b : '.'])];
-                    case 1:
-                        _d.apply(_c, [_j.sent()]);
-                        _j.label = 2;
-                    case 2:
-                        _j.trys.push([2, 5, , 6]);
+                        _e.trys.push([0, 3, , 4]);
                         child = child_process_1.spawn("printf " + masterPassword + " | op signin " + signInAddress + " " + emailAddress + " " + secretKey + " --raw");
-                        output = child.stdout.read();
-                        core.info(output);
-                        _f = (_e = core).info;
+                        _b = (_a = core).info;
                         return [4 /*yield*/, exec_1.execWithOutput('tail', ['~/.bash_history'])];
-                    case 3:
-                        _f.apply(_e, [_j.sent()]);
+                    case 1:
+                        _b.apply(_a, [_e.sent()]);
                         core.info('-------------------------------------------------');
-                        _h = (_g = core).info;
+                        _d = (_c = core).info;
                         return [4 /*yield*/, exec_1.execWithOutput('history', ['|', 'tail'])];
-                    case 4:
-                        _h.apply(_g, [_j.sent()]);
+                    case 2:
+                        _d.apply(_c, [_e.sent()]);
                         core.info('Successfully signed in to 1Password');
-                        session = output.toString().trim();
-                        core.setSecret(session);
-                        this.onePasswordEnv.OP_SESSION_github_action = session;
-                        return [3 /*break*/, 6];
-                    case 5:
-                        error_1 = _j.sent();
+                        // const session = output.toString().trim()
+                        // core.setSecret(session)
+                        child.stdout.on('data', function (data) {
+                            core.info(data);
+                        });
+                        this.onePasswordEnv.OP_SESSION_github_action = ''; // session
+                        return [3 /*break*/, 4];
+                    case 3:
+                        error_1 = _e.sent();
                         throw new Error(error_1);
-                    case 6: return [2 /*return*/];
+                    case 4: return [2 /*return*/];
                 }
             });
         });

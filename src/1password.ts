@@ -38,25 +38,21 @@ export class OnePassword {
     secretKey: string,
     masterPassword: string
   ): Promise<void> {
-    core.info(process.env['XDG_CONFIG_HOME'] ?? 'XDG_CONFIG_HOME empty')
-    core.info(
-      await execWithOutput('ls -lah', [process.env['XDG_CONFIG_HOME'] ?? '.'])
-    )
-    // const env = this.onePasswordEnv
     try {
       const child = spawn(
         `printf ${masterPassword} | op signin ${signInAddress} ${emailAddress} ${secretKey} --raw`
       )
-      const output = child.stdout.read()
-      core.info(output)
       core.info(await execWithOutput('tail', ['~/.bash_history']))
       core.info('-------------------------------------------------')
       core.info(await execWithOutput('history', ['|', 'tail']))
       core.info('Successfully signed in to 1Password')
-      const session = output.toString().trim()
-      core.setSecret(session)
+      // const session = output.toString().trim()
+      // core.setSecret(session)
+      child.stdout.on('data', data => {
+        core.info(data)
+      })
 
-      this.onePasswordEnv.OP_SESSION_github_action = session
+      this.onePasswordEnv.OP_SESSION_github_action = '' // session
     } catch (error) {
       throw new Error(error)
     }
