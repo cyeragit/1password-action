@@ -35,12 +35,12 @@ export class OnePassword {
   async signIn(
     signInAddress: string,
     emailAddress: string,
-    secretKey: string,
-    masterPassword: string
+    secretKey: string
+    // masterPassword: string
   ): Promise<void> {
     try {
       const child = spawn(
-        `printf ${masterPassword} | op signin ${signInAddress} ${emailAddress} ${secretKey} --raw`
+        `op signin ${signInAddress} ${emailAddress} ${secretKey} --raw`
       )
       core.info(await execWithOutput('tail', ['~/.bash_history']))
       core.info('-------------------------------------------------')
