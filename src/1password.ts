@@ -39,7 +39,6 @@ export class OnePassword {
     masterPassword: string
   ): Promise<void> {
     try {
-      core.info(await execWithOutput('cat', ['~/.config/op/config']))
       const child = spawn(
         `printf ${masterPassword} | op signin ${signInAddress} ${emailAddress} ${secretKey} --raw`
       )
