@@ -7,8 +7,10 @@ const ONE_PASSWORD_VERSION = '1.12.3'
 
 export class OnePassword {
   onePasswordEnv: {[key: string]: string}
+  deviceId: string
 
   constructor(deviceId: string) {
+    this.deviceId = deviceId
     this.onePasswordEnv = {
       OP_DEVICE: deviceId
     }
@@ -37,6 +39,7 @@ export class OnePassword {
   ): Promise<void> {
     await execWithOutput('mkdir', ['-p', '~/.config/op'])
     await execWithOutput('sudo', ['chmod', '700', '~/.config/op'])
+    await execWithOutput('export', [`OP_DEVICE=${this.deviceId}`])
     const env = this.onePasswordEnv
     try {
       const output = await execWithOutput(

@@ -44,6 +44,7 @@ var exec_1 = require("./exec");
 var ONE_PASSWORD_VERSION = '1.12.3';
 var OnePassword = /** @class */ (function () {
     function OnePassword(deviceId) {
+        this.deviceId = deviceId;
         this.onePasswordEnv = {
             OP_DEVICE: deviceId
         };
@@ -82,10 +83,13 @@ var OnePassword = /** @class */ (function () {
                         return [4 /*yield*/, exec_1.execWithOutput('sudo', ['chmod', '700', '~/.config/op'])];
                     case 2:
                         _a.sent();
-                        env = this.onePasswordEnv;
-                        _a.label = 3;
+                        return [4 /*yield*/, exec_1.execWithOutput('export', ["OP_DEVICE=" + this.deviceId])];
                     case 3:
-                        _a.trys.push([3, 5, , 6]);
+                        _a.sent();
+                        env = this.onePasswordEnv;
+                        _a.label = 4;
+                    case 4:
+                        _a.trys.push([4, 6, , 7]);
                         return [4 /*yield*/, exec_1.execWithOutput('op', [
                                 'signin',
                                 signInAddress,
@@ -98,17 +102,17 @@ var OnePassword = /** @class */ (function () {
                                 env: env,
                                 input: Buffer.alloc(masterPassword.length, masterPassword)
                             })];
-                    case 4:
+                    case 5:
                         output = _a.sent();
                         core.info('Successfully signed in to 1Password');
                         session = output.toString().trim();
                         core.setSecret(session);
                         this.onePasswordEnv.OP_SESSION_github_action = session;
-                        return [3 /*break*/, 6];
-                    case 5:
+                        return [3 /*break*/, 7];
+                    case 6:
                         error_1 = _a.sent();
                         throw new Error(error_1);
-                    case 6: return [2 /*return*/];
+                    case 7: return [2 /*return*/];
                 }
             });
         });
