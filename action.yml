@@ -2,7 +2,7 @@ name: 'Install 1Password Action'
 description: 'Installs 1Password CLI'
 author: 'TheHobbit'
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'dist/main/main.js'
 branding:
   icon: "lock"
