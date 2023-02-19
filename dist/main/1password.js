@@ -40,7 +40,7 @@ exports.OnePassword = void 0;
 var core = require("@actions/core");
 var install_1 = require("./install");
 var tc = require("@actions/tool-cache");
-var ONE_PASSWORD_VERSION = core.getInput('cli-version') || '1.12.3';
+var ONE_PASSWORD_VERSION = core.getInput('cli-version');
 var OnePassword = /** @class */ (function () {
     function OnePassword() {
         this.onePasswordEnv = {};

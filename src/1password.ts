@@ -2,7 +2,7 @@ import * as core from '@actions/core'
 import {install} from './install'
 import * as tc from '@actions/tool-cache'
 
-const ONE_PASSWORD_VERSION = core.getInput('cli-version') || '1.12.3'
+const ONE_PASSWORD_VERSION = core.getInput('cli-version')
 
 export class OnePassword {
   onePasswordEnv: {[key: string]: string}
