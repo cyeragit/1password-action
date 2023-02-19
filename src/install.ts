@@ -11,12 +11,14 @@ const KEY_FINGERPRINT = '3FEF9748469ADBE15DA7CA80AC2D62742012EA22'
 
 export async function install(onePasswordVersion: string): Promise<void> {
   const platform = os.platform().toLowerCase()
-
+  const arch = os.arch().toLowerCase()
+  const op_version = onePasswordVersion.startsWith('1') ? 'op' : 'op2'
   let extension = 'zip'
   if (platform === 'darwin') {
     extension = 'pkg'
   }
-  const onePasswordUrl = `https://cache.agilebits.com/dist/1P/op/pkg/v${onePasswordVersion}/op_${platform}_amd64_v${onePasswordVersion}.${extension}`
+  const onePasswordUrl = `https://cache.agilebits.com/dist/1P/${op_version}/pkg/v${onePasswordVersion}/op_${platform}_${arch}_v${onePasswordVersion}.${extension}`
+  core.info(`Download URL - ${onePasswordUrl}`)
   const archive = await tc.downloadTool(onePasswordUrl)
 
   let extracted: string

@@ -48,16 +48,19 @@ var CERT_IDENTIFIER = 'Developer ID Installer: AgileBits Inc. (2BUA8C4S2C)';
 var KEY_FINGERPRINT = '3FEF9748469ADBE15DA7CA80AC2D62742012EA22';
 function install(onePasswordVersion) {
     return __awaiter(this, void 0, void 0, function () {
-        var platform, extension, onePasswordUrl, archive, extracted, signatureCheck, destination_1, verifyStatus, destination, cachedPath;
+        var platform, arch, op_version, extension, onePasswordUrl, archive, extracted, signatureCheck, destination_1, verifyStatus, destination, cachedPath;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     platform = os.platform().toLowerCase();
+                    arch = os.arch().toLowerCase();
+                    op_version = onePasswordVersion.startsWith('1') ? 'op' : 'op2';
                     extension = 'zip';
                     if (platform === 'darwin') {
                         extension = 'pkg';
                     }
-                    onePasswordUrl = "https://cache.agilebits.com/dist/1P/op/pkg/v" + onePasswordVersion + "/op_" + platform + "_amd64_v" + onePasswordVersion + "." + extension;
+                    onePasswordUrl = "https://cache.agilebits.com/dist/1P/" + op_version + "/pkg/v" + onePasswordVersion + "/op_" + platform + "_" + arch + "_v" + onePasswordVersion + "." + extension;
+                    core.info("Download URL - " + onePasswordUrl);
                     return [4 /*yield*/, tc.downloadTool(onePasswordUrl)];
                 case 1:
                     archive = _a.sent();
