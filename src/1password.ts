@@ -2,7 +2,7 @@ import * as core from '@actions/core'
 import {install} from './install'
 import * as tc from '@actions/tool-cache'
 
-const ONE_PASSWORD_VERSION = '1.12.3'
+const ONE_PASSWORD_VERSION = core.getInput('cli-version')
 
 export class OnePassword {
   onePasswordEnv: {[key: string]: string}
@@ -22,6 +22,7 @@ export class OnePassword {
     if (cachedOpDirectory !== '') {
       core.addPath(cachedOpDirectory)
     } else {
+      core.info(`op not found in cache, installing version ${ONE_PASSWORD_VERSION}`)
       await install(ONE_PASSWORD_VERSION)
     }
   }

@@ -40,7 +40,7 @@ exports.OnePassword = void 0;
 var core = require("@actions/core");
 var install_1 = require("./install");
 var tc = require("@actions/tool-cache");
-var ONE_PASSWORD_VERSION = '1.12.3';
+var ONE_PASSWORD_VERSION = core.getInput('cli-version');
 var OnePassword = /** @class */ (function () {
     function OnePassword() {
         this.onePasswordEnv = {};
@@ -59,7 +59,9 @@ var OnePassword = /** @class */ (function () {
                         if (!(cachedOpDirectory !== '')) return [3 /*break*/, 1];
                         core.addPath(cachedOpDirectory);
                         return [3 /*break*/, 3];
-                    case 1: return [4 /*yield*/, install_1.install(ONE_PASSWORD_VERSION)];
+                    case 1:
+                        core.info("op not found in cache, installing version " + ONE_PASSWORD_VERSION);
+                        return [4 /*yield*/, install_1.install(ONE_PASSWORD_VERSION)];
                     case 2:
                         _a.sent();
                         _a.label = 3;
